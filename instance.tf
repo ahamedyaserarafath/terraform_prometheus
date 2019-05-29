@@ -1,20 +1,18 @@
-# Below are the aws key pair
-
-resource "aws_key_pair" "promethus_key_pair" {
-  key_name   = "${var.aws_public_key_name}"
-  public_key = "${file(var.aws_public_key_path)}"
-}
-
 
 # Below resource is to create public key
 resource "null_resource" "openssl_execution" {
   provisioner "local-exec" {
-    command = "openssl genrsa -out ${var.aws_private_key_path} 2048"
-  }
-  provisioner "local-exec" {
-    command = "openssl rsa -in ${var.aws_private_key_path} -outform PEM -pubout -out ${var.aws_public_key_path}"
+    command = "ssh-keygen -t rsa -b 4096 -f ${var.aws_public_key_name} -P ''"
   }
 }
+
+# Below are the aws key pair
+resource "aws_key_pair" "promethus_key_pair" {
+  depends_on = ["null_resource.openssl_execution"]
+  key_name   = "${var.aws_public_key_name}"
+  public_key = "${var.aws_public_key_path}"
+}
+
 
 # promethus instance
 resource "aws_instance" "promethus_instance" {
@@ -30,7 +28,7 @@ resource "aws_instance" "promethus_instance" {
   connection {
     user        = "ubuntu"
     host = self.public_ip
-    private_key = "${file(var.aws_private_key_path)}"
+    private_key = "${var.aws_private_key_path}"
   }
 
   provisioner "remote-exec" {

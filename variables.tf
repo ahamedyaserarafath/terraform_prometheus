@@ -22,11 +22,11 @@ variable "aws_public_key_name" {
 }
 
 variable "aws_public_key_path" {
-  default = "./promethus_aws_rsa.pem"
+  default = "./promethus_aws_rsa.pub"
 }
 
 variable "aws_private_key_path" {
-  default = "./promethus_aws_rsa.key"
+  default = "./{var.aws_public_key_name}"
 }
 
 
