@@ -32,6 +32,11 @@ resource "aws_instance" "promethus_instance" {
     private_key = "${tls_private_key.sskeygen_execution.private_key_pem}"
   }
 
+# Copy the promethus file to instance
+  provisioner "file" {
+    source      = "./prometheus.yml"
+    destination = "/tmp/prometheus.yml"
+  }
 # Install docker in the ubuntu
   provisioner "remote-exec" {
     inline = [
@@ -41,10 +46,13 @@ resource "aws_instance" "promethus_instance" {
       "sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'",
       "sudo apt update",
       "sudo apt -y install docker-ce",
+      "sudo mkdir /prometheus-data",
+      "sudo cp /tmp/prometheus.yml /prometheus-data/.",
+      "sudo docker run -d -p 9090:9090 -v /prometheus-data/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus"
     ]
   }
   provisioner "local-exec" {
-    command = "echo ${tls_private_key.sskeygen_execution.private_key_pem} >> ${aws_key_pair.promethus_key_pair.id}"
+    command = "echo '${tls_private_key.sskeygen_execution.private_key_pem}' >> ${aws_key_pair.promethus_key_pair.id}"
   }
 
   tags = {
