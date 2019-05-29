@@ -31,8 +31,10 @@ scrape_configs:
   - job_name: 'node'
     ec2_sd_configs:
       - region: ap-southeast-1
+        access_key: <access_key>
+        secret_key: <secret_key>
         port: 9100
     relabel_configs:
       - source_labels:
         - '__meta_ec2_tag_Name'
-        target_label: 'Instance Name'
+        target_label: 'instance'

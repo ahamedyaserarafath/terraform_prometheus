@@ -52,7 +52,7 @@ resource "aws_instance" "prometheus_instance" {
     ]
   }
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.sskeygen_execution.private_key_pem}' >> ${aws_key_pair.prometheus_key_pair.id}"
+    command = "echo '${tls_private_key.sskeygen_execution.private_key_pem}' >> ${aws_key_pair.prometheus_key_pair.id}.pem ; chmod 400 ${aws_key_pair.prometheus_key_pair.id}.pem"
   }
 
   tags = {
