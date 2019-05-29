@@ -1,6 +1,6 @@
 
-#Create the promethus vpc
-resource "aws_vpc" "promethus_vpc" {
+#Create the prometheus vpc
+resource "aws_vpc" "prometheus_vpc" {
   cidr_block           = "${var.vpc_cidr}"
   enable_dns_hostnames = true
   enable_dns_support = true
@@ -12,8 +12,8 @@ resource "aws_vpc" "promethus_vpc" {
 }
 
 # Create an internet gateway to give our subnet access to the outside world
-resource "aws_internet_gateway" "promethus_ig" {
-  vpc_id = "${aws_vpc.promethus_vpc.id}"
+resource "aws_internet_gateway" "prometheus_ig" {
+  vpc_id = "${aws_vpc.prometheus_vpc.id}"
 
   tags = {
     Name = "${var.name}_ig"
@@ -23,15 +23,15 @@ resource "aws_internet_gateway" "promethus_ig" {
 }
 
 # Grant the VPC internet access on its main route table
-resource "aws_route" "promethus_internet_access" {
-  route_table_id         = "${aws_vpc.promethus_vpc.main_route_table_id}"
+resource "aws_route" "prometheus_internet_access" {
+  route_table_id         = "${aws_vpc.prometheus_vpc.main_route_table_id}"
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.promethus_ig.id}"
+  gateway_id             = "${aws_internet_gateway.prometheus_ig.id}"
 }
 
-resource "aws_subnet" "promethus_subnet" {
-  vpc_id                  = "${aws_vpc.promethus_vpc.id}"
-  cidr_block              = "${var.promethus_server_subnet_cidr1}"
+resource "aws_subnet" "prometheus_subnet" {
+  vpc_id                  = "${aws_vpc.prometheus_vpc.id}"
+  cidr_block              = "${var.prometheus_server_subnet_cidr1}"
   availability_zone       = "${var.aws_availability_zone}"
   map_public_ip_on_launch = true
 
@@ -42,12 +42,12 @@ resource "aws_subnet" "promethus_subnet" {
 
 }
 
-resource "aws_route_table" "promethus_route_table" {
-    vpc_id = "${aws_vpc.promethus_vpc.id}"
+resource "aws_route_table" "prometheus_route_table" {
+    vpc_id = "${aws_vpc.prometheus_vpc.id}"
 
     route {
         cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_internet_gateway.promethus_ig.id}"
+        gateway_id = "${aws_internet_gateway.prometheus_ig.id}"
     }
   tags = {
     Name = "${var.name}_route_table"
@@ -55,17 +55,17 @@ resource "aws_route_table" "promethus_route_table" {
   }
 }
 
-resource "aws_route_table_association" "promethus_route_table_association" {
-    subnet_id      = "${aws_subnet.promethus_subnet.id}"
-    route_table_id = "${aws_route_table.promethus_route_table.id}"
+resource "aws_route_table_association" "prometheus_route_table_association" {
+    subnet_id      = "${aws_subnet.prometheus_subnet.id}"
+    route_table_id = "${aws_route_table.prometheus_route_table.id}"
 }
 
 
-resource "aws_security_group" "promethus_security_group" {
-  name   = "promethus_security_group"
-  description = "Security group for promethus"
+resource "aws_security_group" "prometheus_security_group" {
+  name   = "prometheus_security_group"
+  description = "Security group for prometheus"
 
-  vpc_id = "${aws_vpc.promethus_vpc.id}"
+  vpc_id = "${aws_vpc.prometheus_vpc.id}"
 
 
   # Promethus UI

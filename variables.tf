@@ -18,7 +18,7 @@ variable "aws_instance_type" {
 
 
 variable "aws_public_key_name" {
-  default = "promethus_aws_rsa"
+  default = "prometheus_aws_rsa"
 }
 
 
@@ -40,7 +40,7 @@ variable "vpc_cidr" {
   default = "11.0.0.0/16"
 }
 
-variable "promethus_server_subnet_cidr1" {
+variable "prometheus_server_subnet_cidr1" {
   description = "Promethus Server Subnet CIDR"
   default = "11.0.1.0/24"
 }

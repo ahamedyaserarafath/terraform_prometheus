@@ -8,23 +8,23 @@ resource "tls_private_key" "sskeygen_execution" {
 
 
 # Below are the aws key pair
-resource "aws_key_pair" "promethus_key_pair" {
+resource "aws_key_pair" "prometheus_key_pair" {
   depends_on = ["tls_private_key.sskeygen_execution"]
   key_name   = "${var.aws_public_key_name}"
   public_key = "${tls_private_key.sskeygen_execution.public_key_openssh}"
 }
 
 
-# promethus instance
-resource "aws_instance" "promethus_instance" {
+# prometheus instance
+resource "aws_instance" "prometheus_instance" {
   ami               = "${lookup(var.aws_amis, var.aws_region)}"
   instance_type     = "${var.aws_instance_type}"
   availability_zone = "${var.aws_availability_zone}"
   count             = "1"
 
-  key_name               = "${aws_key_pair.promethus_key_pair.id}"
-  vpc_security_group_ids = ["${aws_security_group.promethus_security_group.id}"]
-  subnet_id              = "${aws_subnet.promethus_subnet.id}"
+  key_name               = "${aws_key_pair.prometheus_key_pair.id}"
+  vpc_security_group_ids = ["${aws_security_group.prometheus_security_group.id}"]
+  subnet_id              = "${aws_subnet.prometheus_subnet.id}"
 
   connection {
     user        = "ubuntu"
@@ -32,7 +32,7 @@ resource "aws_instance" "promethus_instance" {
     private_key = "${tls_private_key.sskeygen_execution.private_key_pem}"
   }
 
-# Copy the promethus file to instance
+# Copy the prometheus file to instance
   provisioner "file" {
     source      = "./prometheus.yml"
     destination = "/tmp/prometheus.yml"
@@ -52,7 +52,7 @@ resource "aws_instance" "promethus_instance" {
     ]
   }
   provisioner "local-exec" {
-    command = "echo '${tls_private_key.sskeygen_execution.private_key_pem}' >> ${aws_key_pair.promethus_key_pair.id}"
+    command = "echo '${tls_private_key.sskeygen_execution.private_key_pem}' >> ${aws_key_pair.prometheus_key_pair.id}"
   }
 
   tags = {
