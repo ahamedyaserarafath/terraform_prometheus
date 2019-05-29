@@ -21,13 +21,6 @@ variable "aws_public_key_name" {
   default = "promethus_aws_rsa"
 }
 
-variable "aws_public_key_path" {
-  default = "./promethus_aws_rsa.pub"
-}
-
-variable "aws_private_key_path" {
-  default = "./{var.aws_public_key_name}"
-}
 
 
 # Ubuntu Server 18.04 LTS (HVM), SSD Volume Type

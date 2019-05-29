@@ -1,16 +1,17 @@
 
 # Below resource is to create public key
-resource "null_resource" "openssl_execution" {
-  provisioner "local-exec" {
-    command = "ssh-keygen -t rsa -b 4096 -f ${var.aws_public_key_name} -P ''"
-  }
+
+resource "tls_private_key" "sskeygen_execution" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
+
 
 # Below are the aws key pair
 resource "aws_key_pair" "promethus_key_pair" {
-  depends_on = ["null_resource.openssl_execution"]
+  depends_on = ["tls_private_key.sskeygen_execution"]
   key_name   = "${var.aws_public_key_name}"
-  public_key = "${var.aws_public_key_path}"
+  public_key = "${tls_private_key.sskeygen_execution.public_key_openssh}"
 }
 
 
@@ -28,13 +29,22 @@ resource "aws_instance" "promethus_instance" {
   connection {
     user        = "ubuntu"
     host = self.public_ip
-    private_key = "${var.aws_private_key_path}"
+    private_key = "${tls_private_key.sskeygen_execution.private_key_pem}"
   }
 
+# Install docker in the ubuntu
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p promethustesting"
+      "sudo apt update",
+      "sudo apt -y install apt-transport-https ca-certificates curl software-properties-common",
+      "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
+      "sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'",
+      "sudo apt update",
+      "sudo apt -y install docker-ce",
     ]
+  }
+  provisioner "local-exec" {
+    command = "echo ${tls_private_key.sskeygen_execution.private_key_pem} >> ${aws_key_pair.promethus_key_pair.id}"
   }
 
   tags = {
