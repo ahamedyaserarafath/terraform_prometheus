@@ -9,8 +9,8 @@ The instances will be built from a basic ubuntu 18.04 ami. We will install the d
 
 # Pre-requisites
 Before we get started installing the Prometheus stack on AWS. 
-*Ensure you install the latest version of [terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
-*Create the IAM access in AWS to provision the ec2 instance,vpc,subnet,internet gateway,security group,iam.
+* Ensure you install the latest version of [terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) is installed
+* Create the IAM access in AWS to provision the ec2 instance,vpc,subnet,internet gateway,security group,iam.
 
 # Installation and configuration
 Clone the project locally to your Docker host.
