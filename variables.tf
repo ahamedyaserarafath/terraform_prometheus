@@ -21,7 +21,9 @@ variable "aws_public_key_name" {
   default = "prometheus_aws_rsa"
 }
 
-
+variable "prometheus_access_name" {
+ default = "prometheus_ec2_access"
+}
 
 # Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
 variable "aws_amis" {
