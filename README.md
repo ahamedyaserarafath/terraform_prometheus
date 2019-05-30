@@ -3,7 +3,6 @@
 - [Pre-requisites](#pre-requisites)
 - [Installation and configuration](#Installation-and-configuration)
 - [Result](#Result)
-- [Prometheus Configuration on Grafana](#Prometheus Configuration on Grafana)
 
 # Introduction
 In this post, we will deploy a prometheus docker to AWS. We will use Terraform to provision a series of Elastic Cloud Compute (EC2) instances.
@@ -50,6 +49,12 @@ terraform apply
 Note: The above command will provision the ec2 instance and install the prometheus
 
 # Result
+```
+Apply complete! Resources: 13 added, 0 changed, 0 destroyed.
 
+Outputs:
 
-# Prometheus Configuration on Grafana
+Grafana_URL = http://54.169.85.67:3000
+Prometheus_URL = http://54.169.85.67:9090
+```
+
