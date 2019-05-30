@@ -1,7 +1,7 @@
 # Terraform prometheus - Provisionin and deploy the Prometheus on AWS using Terraform and Docker.
 - [Introduction](#Introduction)
 - [Pre-requisites](#pre-requisites)
-- [Installation and configuration](#Installation and configuration)
+- [Installation and configuration](#Installation-and-configuration)
 
 # Introduction
 In this post, we will deploy a prometheus docker to AWS. We will use Terraform to provision a series of Elastic Cloud Compute (EC2) instances.
