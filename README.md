@@ -1,4 +1,5 @@
-# Terraform prometheus and Grafana - Provisioni and deploy the Prometheus and Grafana on AWS using Terraform and Docker.
+# Terraform - prometheus - Grafana
+# Provision and deploy the Prometheus and Grafana on AWS using Terraform and Docker.
 - [Introduction](#Introduction)
 - [Pre-requisites](#pre-requisites)
 - [Installation and configuration](#Installation-and-configuration)
