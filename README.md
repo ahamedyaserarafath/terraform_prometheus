@@ -20,11 +20,11 @@ The targets section is where you define what should be monitored by Prometheus(B
 The AWS will provision and those are added as a part of variables, if you wish to change please feel free to change in variable.tf alone.
 
 In this project we used the following provision.
-EC2 AMI - ami-0dad20bd1b9c8c004 
-EC2 Instance Type - t2.micro
-Region - Singapore
-VPC - 11.0.0.0/16
-Subnet - 11.0.1.0/24
+* EC2 AMI - ami-0dad20bd1b9c8c004 
+* EC2 Instance Type - t2.micro
+* Region - Singapore
+* VPC - 11.0.0.0/16
+* Subnet - 11.0.1.0/24
 
 # Steps to run the provisioning in terraform
 1. Clone the repo
