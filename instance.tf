@@ -48,8 +48,8 @@ resource "aws_instance" "prometheus_instance" {
       "sudo apt -y install docker-ce",
       "sudo mkdir /prometheus-data",
       "sudo cp /tmp/prometheus.yml /prometheus-data/.",
-      "sudo sed -i 's/<access_key>/${aws_iam_access_key.prometheus_access_key.id}/g' /prometheus-data/prometheus.yml",
-      "sudo sed -i 's/<secret_key>/${aws_iam_access_key.prometheus_access_key.secret}/g' /prometheus-data/prometheus.yml",
+      "sudo sed -i 's;<access_key>;${aws_iam_access_key.prometheus_access_key.id};g' /prometheus-data/prometheus.yml",
+      "sudo sed -i 's;<secret_key>;${aws_iam_access_key.prometheus_access_key.secret};g' /prometheus-data/prometheus.yml",
       "sudo docker run -d -p 9090:9090 -v /prometheus-data/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus"
     ]
   }
