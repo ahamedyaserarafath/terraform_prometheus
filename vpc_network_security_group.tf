@@ -75,10 +75,10 @@ resource "aws_security_group" "prometheus_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  # SSH access for 22
+  # Grafana access for 3000
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
