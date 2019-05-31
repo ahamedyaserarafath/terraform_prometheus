@@ -4,10 +4,12 @@
 - [Pre-requisites](#pre-requisites)
 - [Installation and configuration](#Installation-and-configuration)
 - [Result](#Result)
+- [Node Exporter](#Node Exporter)
 
 # Introduction
 In this post, we will deploy a prometheus docker to AWS. We will use Terraform to provision a series of Elastic Cloud Compute (EC2) instances.
 The instances will be built from a basic ubuntu 18.04 ami. We will install the docker and deploy the prometheus.
+The Prometheus will discover the ec2 instance in the singapore region(If you wish to change please add the respective region in yml file)
 
 # Pre-requisites
 Before we get started installing the Prometheus stack on AWS. 
@@ -29,6 +31,8 @@ In this project we used the following provision.
 * VPC - 11.0.0.0/16
 * Subnet - 11.0.1.0/24
 * Port Opened - 3000, 9090
+
+In this project the prometheus will discover the ec2 instance across the singapore region.
 
 # Steps to run the provisioning in terraform
 1. Clone the repo
@@ -58,4 +62,14 @@ Outputs:
 Grafana_URL = http://54.169.85.67:3000
 Prometheus_URL = http://54.169.85.67:9090
 ```
+
+# Node Exporter
+Now Grafana and prometheus is up and running. Now its time to run the node-exporter in the ec2 nodes which will the send the metrics to prometheus.
+
+```
+cd node-exporter
+./node_exporter.sh
+```
+
+Node exporter by default send the metrics in 9100 and now you can see those metrics in prometheus and grafana(is used only for ui dashboard)
 
