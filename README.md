@@ -6,6 +6,7 @@
 - [Result](#Result)
 - [Node Exporter](#Node Exporter)
 
+
 # Introduction
 In this post, we will deploy a prometheus docker to AWS. We will use Terraform to provision a series of Elastic Cloud Compute (EC2) instances.
 The instances will be built from a basic ubuntu 18.04 ami. We will install the docker and deploy the prometheus.
