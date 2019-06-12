@@ -37,7 +37,7 @@ In this project the prometheus will discover the ec2 instance across the singapo
 # Steps to run the provisioning in terraform
 1. Clone the repo
 ```
-git clone https://github.com/ahamedyaserarafath/terraform_promethus.git
+git clone https://github.com/ahamedyaserarafath/terraform_prometheus.git
 ```
 2. Terraform initialize a working directory 
 ```
