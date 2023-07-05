@@ -10,8 +10,10 @@ resource "tls_private_key" "sskeygen_execution" {
 # Below are the aws key pair
 resource "aws_key_pair" "prometheus_key_pair" {
   depends_on = ["tls_private_key.sskeygen_execution"]
+
   key_name   = var.aws_public_key_name
   public_key = tls_private_key.sskeygen_execution.public_key_openssh
+
 }
 
 
@@ -59,6 +61,7 @@ resource "aws_instance" "prometheus_instance" {
   }
 
   tags = {
+
     Name        = "${var.name}_instance"
     Environment = "${var.env}"
   }
