@@ -22,7 +22,7 @@ variable "aws_public_key_name" {
 }
 
 variable "prometheus_access_name" {
- default = "prometheus_ec2_access"
+  default = "prometheus_ec2_access"
 }
 
 # Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
@@ -34,20 +34,20 @@ variable "aws_amis" {
 
 variable "name" {
   description = "Infrastructure name"
-  default = "Promethus_Server"
+  default     = "Promethus_Server"
 }
 
 variable "vpc_cidr" {
   description = "VPC CIDR"
-  default = "11.0.0.0/16"
+  default     = "11.0.0.0/16"
 }
 
 variable "prometheus_server_subnet_cidr1" {
   description = "Promethus Server Subnet CIDR"
-  default = "11.0.1.0/24"
+  default     = "11.0.1.0/24"
 }
 
 variable "env" {
   description = "Environment"
-  default = "Prod"
+  default     = "Prod"
 }

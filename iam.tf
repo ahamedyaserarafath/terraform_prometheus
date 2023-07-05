@@ -1,5 +1,5 @@
 resource "aws_iam_user" "prometheus_iam" {
-  name = "${var.prometheus_access_name}"
+  name = var.prometheus_access_name
   path = "/"
   tags = {
     Environment = "${var.env}"
@@ -8,12 +8,12 @@ resource "aws_iam_user" "prometheus_iam" {
 }
 
 resource "aws_iam_access_key" "prometheus_access_key" {
-  user = "${aws_iam_user.prometheus_iam.name}"
+  user = aws_iam_user.prometheus_iam.name
 }
 
 resource "aws_iam_user_policy" "prometheus_role" {
   name = "${var.prometheus_access_name}_role"
-  user = "${aws_iam_user.prometheus_iam.name}"
+  user = aws_iam_user.prometheus_iam.name
 
   policy = <<EOF
 {
