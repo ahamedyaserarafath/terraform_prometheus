@@ -19,9 +19,9 @@ resource "aws_key_pair" "prometheus_key_pair" {
 
 # prometheus instance
 resource "aws_instance" "prometheus_instance" {
-  ami               = lookup(var.aws_amis, var.aws_region)
-  instance_type     = var.aws_instance_type
-  availability_zone = var.aws_availability_zone
+  ami               = "${lookup(var.aws_amis, var.aws_region)}"
+  instance_type     = "${var.aws_instance_type}"
+  availability_zone = "${var.aws_availability_zone}"
 
   key_name               = aws_key_pair.prometheus_key_pair.id
   vpc_security_group_ids = ["${aws_security_group.prometheus_security_group.id}"]
